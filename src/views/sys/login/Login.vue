@@ -1,10 +1,13 @@
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
+    <!-- 语言选择器 -->
     <AppLocalePicker
       class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
       :showText="false"
       v-if="!sessionTimeout && showLocale"
     />
+
+    <!-- 暗黑主题切换器 -->
     <AppDarkModeToggle class="absolute top-3 right-7 enter-x" v-if="!sessionTimeout" />
 
     <span class="-enter-x xl:hidden">
@@ -16,14 +19,17 @@
         <div class="hidden min-h-full pl-4 mr-4 xl:flex xl:flex-col xl:w-6/12">
           <AppLogo class="-enter-x" />
           <div class="my-auto">
+            <!-- 左侧图片 -->
             <img
               :alt="title"
               src="../../../assets/svg/login-box-bg.svg"
               class="w-1/2 -mt-16 -enter-x"
             />
+            <!-- 左侧大标题 -->
             <div class="mt-10 font-medium text-white -enter-x">
               <span class="inline-block mt-4 text-3xl"> {{ t('sys.login.signInTitle') }}</span>
             </div>
+            <!-- 左侧小标题 -->
             <div class="mt-5 font-normal text-white text-md dark:text-gray-500 -enter-x">
               {{ t('sys.login.signInDesc') }}
             </div>
@@ -51,10 +57,6 @@
             "
           >
             <LoginForm />
-            <ForgetPasswordForm />
-            <RegisterForm />
-            <MobileForm />
-            <QrCodeForm />
           </div>
         </div>
       </div>
@@ -67,10 +69,6 @@
   import { AppLogo } from '/@/components/Application';
   import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
   import LoginForm from './LoginForm.vue';
-  import ForgetPasswordForm from './ForgetPasswordForm.vue';
-  import RegisterForm from './RegisterForm.vue';
-  import MobileForm from './MobileForm.vue';
-  import QrCodeForm from './QrCodeForm.vue';
 
   import { useGlobSetting } from '/@/hooks/setting';
   import { useI18n } from '/@/hooks/web/useI18n';
@@ -82,10 +80,6 @@
     components: {
       AppLogo,
       LoginForm,
-      ForgetPasswordForm,
-      RegisterForm,
-      MobileForm,
-      QrCodeForm,
       AppLocalePicker,
       AppDarkModeToggle,
     },
