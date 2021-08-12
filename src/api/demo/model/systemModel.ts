@@ -28,6 +28,29 @@ export interface AccountListItem {
   status: number;
 }
 
+export interface AccountAddModel {
+  account: string;
+  nickname: string;
+  password: string;
+  email: string;
+  dept: number;
+  role: number;
+  status: number;
+  remark: string;
+}
+
+export interface AccountEditModel {
+  id: number;
+  account: string;
+  nickname: string;
+  password: string;
+  email: string;
+  dept: number;
+  role: number;
+  status: number;
+  remark: string;
+}
+
 export interface DeptListItem {
   id: string;
   orderNo: string;

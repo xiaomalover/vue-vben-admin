@@ -8,7 +8,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
-  import { getDeptList } from '/@/api/demo/system';
+  import { AccountAdd, AccountEdit, getDeptList } from '/@/api/demo/system';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -16,7 +16,7 @@
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
-      const rowId = ref('');
+      const rowId = ref(0);
 
       const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
         labelWidth: 100,
@@ -59,9 +59,38 @@
           const values = await validate();
           setModalProps({ confirmLoading: true });
           // TODO custom api
-          console.log(values);
-          closeModal();
-          emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
+          let isUpdateBool = unref(isUpdate);
+          if (isUpdateBool) {
+            let result = await AccountEdit({
+              id: rowId.value,
+              account: values.account,
+              nickname: values.nickname,
+              password: values.pwd,
+              email: values.email,
+              dept: values.dept,
+              role: values.role,
+              status: values.status,
+              remark: values.remark,
+            });
+            if (result) {
+              closeModal();
+            }
+          } else {
+            let result = await AccountAdd({
+              account: values.account,
+              nickname: values.nickname,
+              password: values.pwd,
+              email: values.email,
+              dept: values.dept,
+              role: values.role,
+              status: values.status,
+              remark: values.remark,
+            });
+            if (result) {
+              closeModal();
+            }
+          }
+          emit('success', { isUpdate: isUpdateBool, values: { ...values, id: rowId.value } });
         } finally {
           setModalProps({ confirmLoading: false });
         }

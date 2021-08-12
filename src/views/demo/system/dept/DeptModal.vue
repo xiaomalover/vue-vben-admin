@@ -16,8 +16,7 @@
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
-
-      let id = 0;
+      const rowId = ref(0);
 
       const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelWidth: 100,
@@ -31,7 +30,7 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          id = data.record.id;
+          rowId.value = data.record.id;
           await setFieldsValue({
             ...data.record,
           });
@@ -59,7 +58,7 @@
           // TODO custom api
           if (unref(isUpdate)) {
             let result = await DeptEdit({
-              id: id,
+              id: rowId.value,
               deptName: values.deptName,
               description: values.remark,
               status: values.status,

@@ -11,12 +11,17 @@ import {
   RoleListGetResultModel,
   DeptAddModel,
   DeptEditModel,
+  AccountAddModel,
+  AccountEditModel,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
   //AccountList = '/system/getAccountList',
   AccountList = '/admin/getAccountList',
+  AccountAdd = '/admin/add',
+  AccountEdit = '/admin/edit',
+  AccountDelete = '/admin/delete',
   IsAccountExist = '/system/accountExist',
   //DeptList = '/system/getDeptList',
   DeptList = '/department/getDepartmentTree',
@@ -31,6 +36,14 @@ enum Api {
 
 export const getAccountList = (params: AccountParams) =>
   defHttp.get<AccountListGetResultModel>({ url: Api.AccountList, params });
+
+export const AccountAdd = (params: AccountAddModel) =>
+  defHttp.post({ url: Api.AccountAdd, params }, { errorMessageMode: 'message' });
+
+export const AccountEdit = (params: AccountEditModel) =>
+  defHttp.post({ url: Api.AccountEdit, params }, { errorMessageMode: 'none' });
+
+export const AccountDelete = (id: number) => defHttp.delete({ url: Api.AccountDelete + '/' + id });
 
 export const getDeptList = (params?: DeptListItem) =>
   defHttp.get<DeptListGetResultModel>({ url: Api.DeptList, params });
