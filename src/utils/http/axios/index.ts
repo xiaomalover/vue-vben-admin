@@ -15,6 +15,7 @@ import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
+import { useUserStore } from '/@/store/modules/user';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
@@ -61,6 +62,8 @@ const transform: AxiosTransform = {
     switch (code) {
       case ResultEnum.TIMEOUT:
         timeoutMsg = t('sys.api.timeoutMessage');
+        const userStore = useUserStore();
+        userStore.logoutOnlyLocal(true);
         break;
       default:
         if (message) {
@@ -146,7 +149,7 @@ const transform: AxiosTransform = {
   /**
    * @description: 响应拦截器处理
    */
-  responseInterceptors: (res: AxiosResponse<any>) => {
+  responseInterceptors: (res: AxiosResponse) => {
     return res;
   },
 

@@ -132,6 +132,15 @@ export const useUserStore = defineStore({
     },
 
     /**
+     * @description: logout only local
+     */
+    logoutOnlyLocal(goLogin = false) {
+      this.setToken(undefined);
+      this.setSessionTimeout(false);
+      goLogin && router.push(PageEnum.BASE_LOGIN);
+    },
+
+    /**
      * @description: Confirm before logging out
      */
     confirmLoginOut() {
