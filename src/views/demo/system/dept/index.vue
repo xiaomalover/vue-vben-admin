@@ -30,7 +30,7 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getDeptList } from '/@/api/demo/system';
+  import { getDeptList, DeptDelete } from '/@/api/demo/system';
 
   import { useModal } from '/@/components/Modal';
   import DeptModal from './DeptModal.vue';
@@ -79,8 +79,11 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(record: Recordable) {
+        let result = await DeptDelete(record.id);
+        if (result) {
+          handleSuccess();
+        }
       }
 
       function handleSuccess() {

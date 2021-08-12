@@ -12,11 +12,6 @@ export type RoleParams = {
 
 export type RolePageParams = BasicPageParams & RoleParams;
 
-export type DeptParams = {
-  deptName?: string;
-  status?: string;
-};
-
 export type MenuParams = {
   menuName?: string;
   status?: string;
@@ -38,6 +33,23 @@ export interface DeptListItem {
   orderNo: string;
   createTime: string;
   remark: string;
+  status: number;
+}
+
+export interface DeptAddModel {
+  deptName: string;
+  sortOrder: string;
+  parentId: string;
+  description: string;
+  status: number;
+}
+
+export interface DeptEditModel {
+  id: number;
+  deptName: string;
+  sortOrder: string;
+  parentId: string;
+  description: string;
   status: number;
 }
 

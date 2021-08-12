@@ -9,13 +9,15 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './dept.data';
 
-  import { getDeptList } from '/@/api/demo/system';
+  import { DeptAdd, DeptEdit, getDeptList } from '/@/api/demo/system';
   export default defineComponent({
     name: 'DeptModal',
     components: { BasicModal, BasicForm },
     emits: ['success', 'register'],
     setup(_, { emit }) {
       const isUpdate = ref(true);
+
+      let id = 0;
 
       const [registerForm, { resetFields, setFieldsValue, updateSchema, validate }] = useForm({
         labelWidth: 100,
@@ -24,17 +26,18 @@
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        resetFields();
+        await resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          setFieldsValue({
+          id = data.record.id;
+          await setFieldsValue({
             ...data.record,
           });
         }
         const treeData = await getDeptList();
-        updateSchema({
+        await updateSchema({
           field: 'parentDept',
           componentProps: { treeData },
         });
@@ -46,10 +49,40 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
+
+          let parentId = '0';
+          if (values.parentDept) {
+            values.parentDept = values.parentDept + '';
+            parentId = values.parentDept.substring(values.parentDept.lastIndexOf('-') + 1);
+          }
+
           // TODO custom api
-          console.log(values);
-          closeModal();
-          emit('success');
+          if (unref(isUpdate)) {
+            let result = await DeptEdit({
+              id: id,
+              deptName: values.deptName,
+              description: values.remark,
+              status: values.status,
+              parentId: parentId,
+              sortOrder: values.orderNo,
+            });
+            if (result) {
+              closeModal();
+              emit('success');
+            }
+          } else {
+            let result = await DeptAdd({
+              deptName: values.deptName,
+              description: values.remark,
+              status: values.status,
+              parentId: parentId,
+              sortOrder: values.orderNo,
+            });
+            if (result) {
+              closeModal();
+              emit('success');
+            }
+          }
         } finally {
           setModalProps({ confirmLoading: false });
         }
