@@ -28,22 +28,23 @@
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        resetFields();
+        await resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
           rowId.value = data.record.id;
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
         }
 
         const treeData = await getDeptList();
-        updateSchema([
+        await updateSchema([
           {
             field: 'pwd',
-            show: !unref(isUpdate),
+            required: !unref(isUpdate),
+            //show: !unref(isUpdate),
           },
           {
             field: 'dept',
@@ -90,7 +91,10 @@
               closeModal();
             }
           }
-          emit('success', { isUpdate: isUpdateBool, values: { ...values, id: rowId.value } });
+          let myValues = { ...values, id: rowId.value };
+          //TODO 由于部门觉色比较特殊，不在更新的字段之内所以处理一下才给展示, 结合提交的id，加上后台获取的list
+          //得到值
+          emit('success', { isUpdate: isUpdateBool, values: myValues });
         } finally {
           setModalProps({ confirmLoading: false });
         }

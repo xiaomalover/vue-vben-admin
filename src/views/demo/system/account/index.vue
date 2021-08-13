@@ -38,7 +38,7 @@
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getAccountList } from '/@/api/demo/system';
+  import { AccountDelete, getAccountList } from '/@/api/demo/system';
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
 
@@ -94,8 +94,11 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(record: Recordable) {
+        let result = await AccountDelete(record.id);
+        if (result) {
+          await reload();
+        }
       }
 
       function handleSuccess({ isUpdate, values }) {

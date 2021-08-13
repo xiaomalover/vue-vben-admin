@@ -1,4 +1,4 @@
-import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
+import { getAllRoleList /*, isAccountExist*/ } from '/@/api/demo/system';
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 
@@ -25,7 +25,12 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '角色',
-    dataIndex: 'role',
+    dataIndex: 'roleName',
+    width: 200,
+  },
+  {
+    title: '部门',
+    dataIndex: 'deptName',
     width: 200,
   },
   {
@@ -60,7 +65,7 @@ export const accountFormSchema: FormSchema[] = [
         required: true,
         message: '请输入用户名',
       },
-      {
+      /*{
         validator(_, value) {
           return new Promise((resolve, reject) => {
             isAccountExist(value)
@@ -70,7 +75,7 @@ export const accountFormSchema: FormSchema[] = [
               });
           });
         },
-      },
+      },*/
     ],
   },
   {
