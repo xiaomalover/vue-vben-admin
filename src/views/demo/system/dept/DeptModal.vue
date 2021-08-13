@@ -8,8 +8,9 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './dept.data';
-
   import { DeptAdd, DeptEdit, getDeptList } from '/@/api/demo/system';
+  import { DeptRequestModel } from '/@/api/demo/model/systemModel';
+
   export default defineComponent({
     name: 'DeptModal',
     components: { BasicModal, BasicForm },
@@ -54,29 +55,19 @@
             values.parentDept = values.parentDept + '';
             parentId = values.parentDept.substring(values.parentDept.lastIndexOf('-') + 1);
           }
+          values.parentDept = parentId;
 
-          // TODO custom api
+          let params: DeptRequestModel = values;
+
           if (unref(isUpdate)) {
-            let result = await DeptEdit({
-              id: rowId.value,
-              deptName: values.deptName,
-              description: values.remark,
-              status: values.status,
-              parentId: parentId,
-              sortOrder: values.orderNo,
-            });
+            params.id = rowId.value;
+            let result = await DeptEdit(params);
             if (result) {
               closeModal();
               emit('success');
             }
           } else {
-            let result = await DeptAdd({
-              deptName: values.deptName,
-              description: values.remark,
-              status: values.status,
-              parentId: parentId,
-              sortOrder: values.orderNo,
-            });
+            let result = await DeptAdd(params);
             if (result) {
               closeModal();
               emit('success');

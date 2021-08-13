@@ -9,12 +9,10 @@ import {
   AccountListGetResultModel,
   RolePageListGetResultModel,
   RoleListGetResultModel,
-  DeptAddModel,
-  DeptEditModel,
-  AccountAddModel,
-  AccountEditModel,
-  RoleAddModel,
-  RoleEditModel,
+  DeptRequestModel,
+  AccountRequestModel,
+  RoleRequestModel,
+  MenuRequestModel,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
@@ -33,6 +31,9 @@ enum Api {
   //setRoleStatus = '/system/setRoleStatus',
   setRoleStatus = '/role/setStatus',
   MenuList = '/system/getMenuList',
+  MenuAdd = '/menu/add',
+  MenuEdit = '/menu/edit',
+  MenuDelete = '/menu/delete',
   //RolePageList = '/system/getRoleListByPage',
   RolePageList = '/role/getRoleList',
   //GetAllRoleList = '/system/getAllRoleList',
@@ -45,10 +46,10 @@ enum Api {
 export const getAccountList = (params: AccountParams) =>
   defHttp.get<AccountListGetResultModel>({ url: Api.AccountList, params });
 
-export const AccountAdd = (params: AccountAddModel) =>
+export const AccountAdd = (params: AccountRequestModel) =>
   defHttp.post({ url: Api.AccountAdd, params }, { errorMessageMode: 'message' });
 
-export const AccountEdit = (params: AccountEditModel) =>
+export const AccountEdit = (params: AccountRequestModel) =>
   defHttp.post({ url: Api.AccountEdit, params }, { errorMessageMode: 'none' });
 
 export const AccountDelete = (id: number) => defHttp.delete({ url: Api.AccountDelete + '/' + id });
@@ -56,10 +57,10 @@ export const AccountDelete = (id: number) => defHttp.delete({ url: Api.AccountDe
 export const getDeptList = (params?: DeptListItem) =>
   defHttp.get<DeptListGetResultModel>({ url: Api.DeptList, params });
 
-export const DeptAdd = (params: DeptAddModel) =>
+export const DeptAdd = (params: DeptRequestModel) =>
   defHttp.post({ url: Api.DeptAdd, params }, { errorMessageMode: 'none' });
 
-export const DeptEdit = (params: DeptEditModel) =>
+export const DeptEdit = (params: DeptRequestModel) =>
   defHttp.post({ url: Api.DeptEdit, params }, { errorMessageMode: 'none' });
 
 export const DeptDelete = (id: number) => defHttp.delete({ url: Api.DeptDelete + '/' + id });
@@ -67,16 +68,24 @@ export const DeptDelete = (id: number) => defHttp.delete({ url: Api.DeptDelete +
 export const getMenuList = (params?: MenuParams) =>
   defHttp.get<MenuListGetResultModel>({ url: Api.MenuList, params });
 
+export const MenuAdd = (params: MenuRequestModel) =>
+  defHttp.post({ url: Api.MenuAdd, params }, { errorMessageMode: 'none' });
+
+export const MenuEdit = (params: MenuRequestModel) =>
+  defHttp.post({ url: Api.MenuEdit, params }, { errorMessageMode: 'none' });
+
+export const MenuDelete = (id: number) => defHttp.delete({ url: Api.MenuDelete + '/' + id });
+
 export const getRoleListByPage = (params?: RolePageParams) =>
   defHttp.get<RolePageListGetResultModel>({ url: Api.RolePageList, params });
 
 export const getAllRoleList = (params?: RoleParams) =>
   defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
 
-export const RoleAdd = (params: RoleAddModel) =>
+export const RoleAdd = (params: RoleRequestModel) =>
   defHttp.post({ url: Api.RoleAdd, params }, { errorMessageMode: 'message' });
 
-export const RoleEdit = (params: RoleEditModel) =>
+export const RoleEdit = (params: RoleRequestModel) =>
   defHttp.post({ url: Api.RoleEdit, params }, { errorMessageMode: 'none' });
 
 export const RoleDelete = (id: number) => defHttp.delete({ url: Api.RoleDelete + '/' + id });

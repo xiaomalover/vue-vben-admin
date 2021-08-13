@@ -29,6 +29,7 @@
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
   import { RoleAdd, RoleEdit, getMenuList } from '/@/api/demo/system';
+  import { RoleRequestModel } from '/@/api/demo/model/systemModel';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -68,33 +69,23 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
-          let isUpdateBool = unref(isUpdate);
-          if (isUpdateBool) {
-            let result = await RoleEdit({
-              id: rowId.value,
-              roleName: values.roleName,
-              roleValue: values.roleValue,
-              menu: values.menu,
-              status: values.status,
-              remark: values.remark,
-            });
+
+          let params: RoleRequestModel = values;
+
+          if (unref(isUpdate)) {
+            params.id = rowId.value;
+            let result = await RoleEdit(params);
             if (result) {
               closeDrawer();
+              emit('success');
             }
           } else {
-            let result = await RoleAdd({
-              roleName: values.roleName,
-              roleValue: values.roleValue,
-              menu: values.menu,
-              status: values.status,
-              remark: values.remark,
-            });
+            let result = await RoleAdd(params);
             if (result) {
               closeDrawer();
+              emit('success');
             }
           }
-          emit('success');
         } finally {
           setDrawerProps({ confirmLoading: false });
         }

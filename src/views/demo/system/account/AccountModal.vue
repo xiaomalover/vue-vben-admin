@@ -9,6 +9,7 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
   import { AccountAdd, AccountEdit, getDeptList } from '/@/api/demo/system';
+  import { AccountRequestModel } from '/@/api/demo/model/systemModel';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -59,34 +60,18 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
+
+          let params: AccountRequestModel = values;
+
           let isUpdateBool = unref(isUpdate);
           if (isUpdateBool) {
-            let result = await AccountEdit({
-              id: rowId.value,
-              account: values.account,
-              nickname: values.nickname,
-              password: values.pwd,
-              email: values.email,
-              dept: values.dept,
-              role: values.role,
-              status: values.status,
-              remark: values.remark,
-            });
+            params.id = rowId.value;
+            let result = await AccountEdit(params);
             if (result) {
               closeModal();
             }
           } else {
-            let result = await AccountAdd({
-              account: values.account,
-              nickname: values.nickname,
-              password: values.pwd,
-              email: values.email,
-              dept: values.dept,
-              role: values.role,
-              status: values.status,
-              remark: values.remark,
-            });
+            let result = await AccountAdd(params);
             if (result) {
               closeModal();
             }

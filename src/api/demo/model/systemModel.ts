@@ -28,22 +28,11 @@ export interface AccountListItem {
   status: number;
 }
 
-export interface AccountAddModel {
+export interface AccountRequestModel {
+  id?: number;
   account: string;
   nickname: string;
-  password: string;
-  email: string;
-  dept: number;
-  role: number;
-  status: number;
-  remark: string;
-}
-
-export interface AccountEditModel {
-  id: number;
-  account: string;
-  nickname: string;
-  password: string;
+  pwd: string;
   email: string;
   dept: number;
   role: number;
@@ -59,20 +48,12 @@ export interface DeptListItem {
   status: number;
 }
 
-export interface DeptAddModel {
+export interface DeptRequestModel {
+  id?: number;
   deptName: string;
-  sortOrder: string;
-  parentId: string;
-  description: string;
-  status: number;
-}
-
-export interface DeptEditModel {
-  id: number;
-  deptName: string;
-  sortOrder: string;
-  parentId: string;
-  description: string;
+  orderNo: string;
+  parentDept: string;
+  remark: string;
   status: number;
 }
 
@@ -95,7 +76,8 @@ export interface RoleListItem {
   createTime: string;
 }
 
-export interface RoleAddModel {
+export interface RoleRequestModel {
+  id?: number;
   roleName: string;
   roleValue: string;
   menu: number[];
@@ -103,13 +85,20 @@ export interface RoleAddModel {
   remark: string;
 }
 
-export interface RoleEditModel {
-  id: number;
-  roleName: string;
-  roleValue: string;
-  menu: number[];
+export interface MenuRequestModel {
+  id?: number;
+  icon?: string;
+  isExt?: number;
+  menuName: string;
+  orderNo: number;
+  parentMenu: number;
+  routePath?: string;
+  show?: number;
+  type: number;
+  component?: string;
+  keepalive?: number;
   status: number;
-  remark: string;
+  permission?: string;
 }
 
 /**
