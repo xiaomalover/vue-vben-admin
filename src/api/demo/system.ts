@@ -13,6 +13,8 @@ import {
   DeptEditModel,
   AccountAddModel,
   AccountEditModel,
+  RoleAddModel,
+  RoleEditModel,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
@@ -28,10 +30,16 @@ enum Api {
   DeptAdd = '/department/add',
   DeptEdit = '/department/edit',
   DeptDelete = '/department/delete',
-  setRoleStatus = '/system/setRoleStatus',
+  //setRoleStatus = '/system/setRoleStatus',
+  setRoleStatus = '/role/setStatus',
   MenuList = '/system/getMenuList',
-  RolePageList = '/system/getRoleListByPage',
-  GetAllRoleList = '/system/getAllRoleList',
+  //RolePageList = '/system/getRoleListByPage',
+  RolePageList = '/role/getRoleList',
+  //GetAllRoleList = '/system/getAllRoleList',
+  GetAllRoleList = '/role/getAllRoleList',
+  RoleAdd = '/role/add',
+  RoleEdit = '/role/edit',
+  RoleDelete = '/role/delete',
 }
 
 export const getAccountList = (params: AccountParams) =>
@@ -65,7 +73,15 @@ export const getRoleListByPage = (params?: RolePageParams) =>
 export const getAllRoleList = (params?: RoleParams) =>
   defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
 
-export const setRoleStatus = (id: number, status: string) =>
+export const RoleAdd = (params: RoleAddModel) =>
+  defHttp.post({ url: Api.RoleAdd, params }, { errorMessageMode: 'message' });
+
+export const RoleEdit = (params: RoleEditModel) =>
+  defHttp.post({ url: Api.RoleEdit, params }, { errorMessageMode: 'none' });
+
+export const RoleDelete = (id: number) => defHttp.delete({ url: Api.RoleDelete + '/' + id });
+
+export const setRoleStatus = (id: number, status: number) =>
   defHttp.post({ url: Api.setRoleStatus, params: { id, status } });
 
 export const isAccountExist = (account: string) =>

@@ -28,7 +28,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { RoleAdd, RoleEdit, getMenuList } from '/@/api/demo/system';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -37,6 +37,7 @@
     setup(_, { emit }) {
       const isUpdate = ref(true);
       const treeData = ref<TreeItem[]>([]);
+      const rowId = ref(0);
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 90,
@@ -45,7 +46,7 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        resetFields();
+        await resetFields();
         setDrawerProps({ confirmLoading: false });
         // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
         if (unref(treeData).length === 0) {
@@ -54,7 +55,8 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          setFieldsValue({
+          rowId.value = data.record.id;
+          await setFieldsValue({
             ...data.record,
           });
         }
@@ -67,8 +69,31 @@
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
           // TODO custom api
-          console.log(values);
-          closeDrawer();
+          let isUpdateBool = unref(isUpdate);
+          if (isUpdateBool) {
+            let result = await RoleEdit({
+              id: rowId.value,
+              roleName: values.roleName,
+              roleValue: values.roleValue,
+              menu: values.menu,
+              status: values.status,
+              remark: values.remark,
+            });
+            if (result) {
+              closeDrawer();
+            }
+          } else {
+            let result = await RoleAdd({
+              roleName: values.roleName,
+              roleValue: values.roleValue,
+              menu: values.menu,
+              status: values.status,
+              remark: values.remark,
+            });
+            if (result) {
+              closeDrawer();
+            }
+          }
           emit('success');
         } finally {
           setDrawerProps({ confirmLoading: false });

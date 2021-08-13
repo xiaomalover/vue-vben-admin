@@ -95,6 +95,23 @@ export interface RoleListItem {
   createTime: string;
 }
 
+export interface RoleAddModel {
+  roleName: string;
+  roleValue: string;
+  menu: number[];
+  status: number;
+  remark: string;
+}
+
+export interface RoleEditModel {
+  id: number;
+  roleName: string;
+  roleValue: string;
+  menu: number[];
+  status: number;
+  remark: string;
+}
+
 /**
  * @description: Request list return value
  */
