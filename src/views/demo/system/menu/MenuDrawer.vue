@@ -16,7 +16,7 @@
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { MenuAdd, MenuEdit, getMenuList } from '/@/api/demo/system';
   import { MenuRequestModel } from '/@/api/demo/model/systemModel';
 
   export default defineComponent({
@@ -60,10 +60,20 @@
           setDrawerProps({ confirmLoading: true });
 
           let params: MenuRequestModel = values;
-          console.log(params);
 
-          closeDrawer();
-          emit('success');
+          if (unref(isUpdate)) {
+            let result = await MenuEdit(params);
+            if (result) {
+              closeDrawer();
+              emit('success');
+            }
+          } else {
+            let result = await MenuAdd(params);
+            if (result) {
+              closeDrawer();
+              emit('success');
+            }
+          }
         } finally {
           setDrawerProps({ confirmLoading: false });
         }
