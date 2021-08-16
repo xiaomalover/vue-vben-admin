@@ -62,6 +62,7 @@
           let params: MenuRequestModel = values;
 
           if (unref(isUpdate)) {
+            params.id = rowId.value;
             let result = await MenuEdit(params);
             if (result) {
               closeDrawer();
