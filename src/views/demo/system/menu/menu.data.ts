@@ -132,7 +132,7 @@ export const formSchema: FormSchema[] = [
     label: '路由地址',
     component: 'Input',
     required: true,
-    ifShow: ({ values }) => !isButton(values.type),
+    //ifShow: ({ values }) => !isButton(values.type),
   },
   {
     field: 'component',

@@ -5,7 +5,7 @@ import { CaptchaModel } from './model/captchaModel';
 import { ErrorMessageMode } from '/#/axios';
 
 enum Api {
-  getCaptcha = '/common/captcha/getCaptcha',
+  getCaptcha = '/captcha/getCaptcha',
 }
 
 /**

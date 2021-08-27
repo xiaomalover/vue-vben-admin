@@ -14,7 +14,8 @@
           :treeData="treeData"
           :replaceFields="{ title: 'menuName', key: 'id' }"
           checkable
-          toolbar
+          :checkStrictly = "true"
+          :toolbar = "true"
           title="菜单分配"
         />
       </template>
@@ -69,6 +70,11 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
+
+          //不知道为什么，用层级独立时多了一维checked
+          if (values.menu.checked) {
+            values.menu = values.menu.checked;
+          }
 
           let params: RoleRequestModel = values;
 
