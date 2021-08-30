@@ -147,6 +147,21 @@ export const formSchema: FormSchema[] = [
     ifShow: ({ values }) => !isDir(values.type),
   },
   {
+    field: 'method',
+    label: '请求方法',
+    component: 'RadioButtonGroup',
+    defaultValue: 'GET',
+    componentProps: {
+      options: [
+        { label: 'GET', value: 'GET' },
+        { label: 'POST', value: 'POST' },
+        { label: 'DELETE', value: 'DELETE' },
+        { label: 'PUT', value: 'PUT' },
+      ],
+    },
+    ifShow: ({ values }) => isButton(values.type),
+  },
+  {
     field: 'status',
     label: '状态',
     component: 'RadioButtonGroup',

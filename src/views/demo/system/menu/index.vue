@@ -50,7 +50,7 @@
           labelWidth: 120,
           schemas: searchFormSchema,
         },
-        isTreeTable: true,
+        isTreeTable: false,
         pagination: false,
         striped: false,
         useSearchForm: true,

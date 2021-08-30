@@ -14,8 +14,8 @@
           :treeData="treeData"
           :replaceFields="{ title: 'menuName', key: 'id' }"
           checkable
-          :checkStrictly = "true"
-          :toolbar = "true"
+          :checkStrictly="true"
+          :toolbar="true"
           title="菜单分配"
         />
       </template>
