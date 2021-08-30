@@ -30,7 +30,7 @@ enum Api {
   DeptDelete = '/department/delete',
   //setRoleStatus = '/system/setRoleStatus',
   setRoleStatus = '/role/setStatus',
-  MenuList = '/permission/getMenuTree',
+  MenuList = '/permission/getMenuList',
   MenuAdd = '/permission/add',
   MenuEdit = '/permission/edit',
   MenuDelete = '/permission/delete',
