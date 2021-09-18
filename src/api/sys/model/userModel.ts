@@ -9,6 +9,14 @@ export interface LoginParams {
   rememberMe: boolean;
 }
 
+/**
+ * @description: unlock parameters
+ */
+export interface UnlockParams {
+  username: string;
+  password: string;
+}
+
 export interface RoleInfo {
   roleName: string;
   value: string;

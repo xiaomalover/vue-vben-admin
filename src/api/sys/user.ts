@@ -1,5 +1,5 @@
 import { defHttp } from '/@/utils/http/axios';
-import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userModel';
+import { LoginParams, LoginResultModel, GetUserInfoModel, UnlockParams } from './model/userModel';
 
 import { ErrorMessageMode } from '/#/axios';
 
@@ -8,6 +8,7 @@ enum Api {
   Logout = '/auth/logout',
   GetUserInfo = '/admin/userInfo',
   GetPermCode = '/permission/getPermCode',
+  unlockApi = '/auth/unlock',
 }
 
 /**
@@ -17,6 +18,21 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
   return defHttp.post<LoginResultModel>(
     {
       url: Api.Login,
+      params,
+    },
+    {
+      errorMessageMode: mode,
+    },
+  );
+}
+
+/**
+ * @description: user login api
+ */
+export function unlockApi(params: UnlockParams, mode: ErrorMessageMode = 'modal') {
+  return defHttp.post<boolean>(
+    {
+      url: Api.unlockApi,
       params,
     },
     {
