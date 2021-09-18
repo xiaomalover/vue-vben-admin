@@ -135,6 +135,7 @@
               username: data.account,
               captcha: data.captcha,
               captchaId: formData.captchaId,
+              rememberMe: rememberMe.value,
               mode: 'none', //不要默认的错误提示
             })
           );

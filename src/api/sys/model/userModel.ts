@@ -6,6 +6,7 @@ export interface LoginParams {
   password: string;
   captcha: string;
   captchaId: string;
+  rememberMe: boolean;
 }
 
 export interface RoleInfo {
