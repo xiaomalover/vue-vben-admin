@@ -121,7 +121,7 @@
       }
 
       onBeforeMount(async () => {
-        getCaptchaImg();
+        await getCaptchaImg();
       });
 
       async function handleLogin() {
