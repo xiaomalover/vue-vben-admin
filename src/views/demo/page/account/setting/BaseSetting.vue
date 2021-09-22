@@ -18,7 +18,7 @@
         </div>
       </a-col>
     </a-row>
-    <Button type="primary" @click="handleSubmit"> 更新基本信息 </Button>
+    <Button v-auth="'setting:btn:basic'" type="primary" @click="handleSubmit"> 更新基本信息 </Button>
   </CollapseContainer>
 </template>
 <script lang="ts">
@@ -31,10 +31,11 @@
   import { useMessage } from '/@/hooks/web/useMessage';
 
   import headerImg from '/@/assets/images/header.jpg';
-  import { accountInfoApi } from '/@/api/demo/account';
+  import { accountEdit, accountInfoApi } from '/@/api/demo/account';
   import { baseSetschemas } from './data';
   import { useUserStore } from '/@/store/modules/user';
   import { uploadApi } from '/@/api/sys/upload';
+  import { GetAccountInfoModel } from "/@/api/demo/model/accountModel";
 
   export default defineComponent({
     components: {
@@ -49,7 +50,7 @@
       const { createMessage } = useMessage();
       const userStore = useUserStore();
 
-      const [register, { setFieldsValue }] = useForm({
+      const [register, { setFieldsValue, validate }] = useForm({
         labelWidth: 120,
         schemas: baseSetschemas,
         showActionButtonGroup: false,
@@ -57,7 +58,7 @@
 
       onMounted(async () => {
         const data = await accountInfoApi();
-        setFieldsValue(data);
+        await setFieldsValue(data);
       });
 
       const avatar = computed(() => {
@@ -71,14 +72,21 @@
         userStore.setUserInfo(userinfo);
       }
 
+      async function handleSubmit() {
+        try {
+          let params: GetAccountInfoModel = await validate();
+          await accountEdit(params);
+          createMessage.success('更新成功！');
+        } finally {
+        }
+      }
+
       return {
         avatar,
         register,
         uploadApi: uploadApi as any,
         updateAvatar,
-        handleSubmit: () => {
-          createMessage.success('更新成功！');
-        },
+        handleSubmit,
       };
     },
   });

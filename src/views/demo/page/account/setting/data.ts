@@ -1,4 +1,4 @@
-import { FormSchema } from '/@/components/Form/index';
+import { FormSchema } from '/@/components/Form';
 
 export interface ListItem {
   key: string;
@@ -18,10 +18,10 @@ export const settingList = [
   },
   {
     key: '2',
-    name: '安全设置',
+    name: '修改密码',
     component: 'SecureSetting',
   },
-  {
+  /*{
     key: '3',
     name: '账号绑定',
     component: 'AccountBind',
@@ -30,11 +30,17 @@ export const settingList = [
     key: '4',
     name: '新消息通知',
     component: 'MsgNotify',
-  },
+  },*/
 ];
 
 // 基础设置 form
 export const baseSetschemas: FormSchema[] = [
+  {
+    field: 'mobile',
+    component: 'Input',
+    label: '手机号',
+    colProps: { span: 18 },
+  },
   {
     field: 'email',
     component: 'Input',
@@ -42,33 +48,75 @@ export const baseSetschemas: FormSchema[] = [
     colProps: { span: 18 },
   },
   {
-    field: 'name',
+    field: 'nickname',
     component: 'Input',
     label: '昵称',
     colProps: { span: 18 },
   },
   {
-    field: 'introduction',
+    field: 'description',
     component: 'InputTextArea',
     label: '个人简介',
     colProps: { span: 18 },
   },
-  {
-    field: 'phone',
-    component: 'Input',
-    label: '联系电话',
-    colProps: { span: 18 },
-  },
-  {
+  /*{
     field: 'address',
     component: 'Input',
     label: '所在地区',
     colProps: { span: 18 },
+  },*/
+];
+
+// 修改密码 form
+export const passwordSetSchemas: FormSchema[] = [
+  {
+    field: 'oldPassword',
+    label: '当前密码',
+    component: 'InputPassword',
+    required: true,
+  },
+  {
+    field: 'password',
+    label: '新密码',
+    /*component: 'StrengthMeter',
+    componentProps: {
+      placeholder: '新密码',
+    },
+    rules: [
+      {
+        required: true,
+        message: '请输入新密码',
+      },
+    ],*/
+    component: 'InputPassword',
+    required: true,
+  },
+  {
+    field: 'confirmPassword',
+    label: '确认密码',
+    component: 'InputPassword',
+
+    dynamicRules: ({ values }) => {
+      return [
+        {
+          required: true,
+          validator: (_, value) => {
+            if (!value) {
+              return Promise.reject('确认密码不能为空');
+            }
+            if (value !== values.password) {
+              return Promise.reject('两次输入的密码不一致!');
+            }
+            return Promise.resolve();
+          },
+        },
+      ];
+    },
   },
 ];
 
 // 安全设置 list
-export const secureSettingList: ListItem[] = [
+/*export const secureSettingList: ListItem[] = [
   {
     key: '1',
     title: '账户密码',
@@ -99,7 +147,7 @@ export const secureSettingList: ListItem[] = [
     description: '未绑定 MFA 设备，绑定后，可以进行二次确认',
     extra: '修改',
   },
-];
+];*/
 
 // 账号绑定 list
 export const accountBindList: ListItem[] = [

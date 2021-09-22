@@ -7,4 +7,6 @@ export enum PageEnum {
   ERROR_PAGE = '/exception',
   // error log page path
   ERROR_LOG_PAGE = '/error-log/list',
+  // page user info and setting
+  ACCOUNT_SETTING = '/account-setting',
 }

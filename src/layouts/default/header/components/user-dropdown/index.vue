@@ -13,8 +13,8 @@
       <Menu @click="handleMenuClick">
         <MenuItem
           key="doc"
-          :text="t('layout.header.dropdownItemDoc')"
-          icon="ion:document-text-outline"
+          :text="'个人设置'"
+          icon="ant-design:info-circle-twotone"
           v-if="getShowDoc"
         />
         <MenuDivider v-if="getShowDoc" />
@@ -36,23 +36,23 @@
 </template>
 <script lang="ts">
   // components
-  import { Dropdown, Menu } from 'ant-design-vue';
+  import {Dropdown, Menu} from 'ant-design-vue';
 
-  import { defineComponent, computed } from 'vue';
+  import {computed, defineComponent} from 'vue';
+  //import { DOC_URL } from '/@/settings/siteSetting';
+  import {useGo} from '/@/hooks/web/usePage';
 
-  import { DOC_URL } from '/@/settings/siteSetting';
-
-  import { useUserStore } from '/@/store/modules/user';
-  import { useHeaderSetting } from '/@/hooks/setting/useHeaderSetting';
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { useModal } from '/@/components/Modal';
+  import {useUserStore} from '/@/store/modules/user';
+  import {useHeaderSetting} from '/@/hooks/setting/useHeaderSetting';
+  import {useI18n} from '/@/hooks/web/useI18n';
+  import {useDesign} from '/@/hooks/web/useDesign';
+  import {useModal} from '/@/components/Modal';
 
   import headerImg from '/@/assets/images/header.jpg';
-  import { propTypes } from '/@/utils/propTypes';
-  import { openWindow } from '/@/utils';
-
-  import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+  import {propTypes} from '/@/utils/propTypes';
+  import {createAsyncComponent} from '/@/utils/factory/createAsyncComponent';
+  import {PageEnum} from "/@/enums/pageEnum";
+  //import { openWindow } from '/@/utils';
 
   type MenuEvent = 'logout' | 'doc' | 'lock';
 
@@ -73,6 +73,7 @@
       const { t } = useI18n();
       const { getShowDoc, getUseLockPage } = useHeaderSetting();
       const userStore = useUserStore();
+      const go = useGo();
 
       const getUserInfo = computed(() => {
         const { realName = '', avatar, desc } = userStore.getUserInfo || {};
@@ -91,8 +92,13 @@
       }
 
       // open doc
-      function openDoc() {
+      /*function openDoc() {
         openWindow(DOC_URL);
+      }*/
+
+      // go setting
+      function goSetting() {
+          go(PageEnum.ACCOUNT_SETTING);
       }
 
       function handleMenuClick(e: { key: MenuEvent }) {
@@ -101,7 +107,8 @@
             handleLoginOut();
             break;
           case 'doc':
-            openDoc();
+            //openDoc();
+            goSetting();
             break;
           case 'lock':
             handleLock();

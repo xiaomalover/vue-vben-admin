@@ -1,47 +1,64 @@
 <template>
-  <CollapseContainer title="安全设置" :canExpan="false">
-    <List>
-      <template v-for="item in list" :key="item.key">
-        <ListItem>
-          <ListItemMeta>
-            <template #title>
-              {{ item.title }}
-              <div class="extra" v-if="item.extra">
-                {{ item.extra }}
-              </div>
-            </template>
-            <template #description>
-              <div>{{ item.description }}</div>
-            </template>
-          </ListItemMeta>
-        </ListItem>
-      </template>
-    </List>
+  <CollapseContainer title="修改密码" :canExpan="false">
+    <a-row :gutter="24">
+      <a-col>
+        <BasicForm @register="register" />
+      </a-col>
+    </a-row>
+    <Button v-auth="'setting:btn:password'" type="primary" @click="handleSubmit"> 修改密码 </Button>
   </CollapseContainer>
 </template>
 <script lang="ts">
-  import { List } from 'ant-design-vue';
+  import { Button, Row, Col } from 'ant-design-vue';
   import { defineComponent } from 'vue';
-  import { CollapseContainer } from '/@/components/Container/index';
-
-  import { secureSettingList } from './data';
+  import { BasicForm, useForm } from '/@/components/Form/index';
+  import { CollapseContainer } from '/@/components/Container';
+  import { useMessage } from '/@/hooks/web/useMessage';
+  import { passwordSetSchemas } from './data';
+  import { PasswordRequestModel } from '/@/api/demo/model/accountModel';
+  import { changePasswordApi } from '/@/api/demo/account';
 
   export default defineComponent({
-    components: { CollapseContainer, List, ListItem: List.Item, ListItemMeta: List.Item.Meta },
+    components: {
+      BasicForm,
+      CollapseContainer,
+      Button,
+      ARow: Row,
+      ACol: Col,
+    },
     setup() {
+      const { createMessage } = useMessage();
+
+      const [register, { validate, resetFields }] = useForm({
+        labelWidth: 120,
+        schemas: passwordSetSchemas,
+        showActionButtonGroup: false,
+      });
+
+      async function handleSubmit() {
+        try {
+          let params: PasswordRequestModel = await validate();
+          await changePasswordApi(params);
+          createMessage.success('更新成功！');
+          await resetFields();
+        } finally {
+        }
+      }
+
       return {
-        list: secureSettingList,
+        register,
+        handleSubmit,
       };
     },
   });
 </script>
+
 <style lang="less" scoped>
-  .extra {
-    float: right;
-    margin-top: 10px;
-    margin-right: 30px;
-    font-weight: normal;
-    color: #1890ff;
-    cursor: pointer;
+  .change-avatar {
+    img {
+      display: block;
+      margin-bottom: 15px;
+      border-radius: 50%;
+    }
   }
 </style>
