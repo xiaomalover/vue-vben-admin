@@ -3,6 +3,7 @@ export interface GetAccountInfoModel {
   nickname: string;
   description: string;
   mobile: string;
+  avatar: string;
 }
 
 export interface PasswordRequestModel {

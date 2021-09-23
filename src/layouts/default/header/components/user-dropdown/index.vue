@@ -14,7 +14,7 @@
         <MenuItem
           key="doc"
           :text="'个人设置'"
-          icon="ant-design:info-circle-twotone"
+          icon="ant-design:info-circle-outlined"
           v-if="getShowDoc"
         />
         <MenuDivider v-if="getShowDoc" />

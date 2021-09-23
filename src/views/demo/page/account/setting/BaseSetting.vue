@@ -23,7 +23,7 @@
 </template>
 <script lang="ts">
   import { Button, Row, Col } from 'ant-design-vue';
-  import { computed, defineComponent, onMounted } from 'vue';
+  import { computed, defineComponent, onMounted, ref } from 'vue';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { CollapseContainer } from '/@/components/Container';
   import { CropperAvatar } from '/@/components/Cropper';
@@ -50,6 +50,8 @@
       const { createMessage } = useMessage();
       const userStore = useUserStore();
 
+      const avatarUrl = ref("");
+
       const [register, { setFieldsValue, validate }] = useForm({
         labelWidth: 120,
         schemas: baseSetschemas,
@@ -66,15 +68,20 @@
         return avatar || headerImg;
       });
 
-      function updateAvatar(src: string) {
-        const userinfo = userStore.getUserInfo;
-        userinfo.avatar = src;
-        userStore.setUserInfo(userinfo);
+      async function updateAvatar({ source, data }) {
+        //先存入缓存
+        const userInfo = userStore.getUserInfo;
+        userInfo.avatar = source;
+        userStore.setUserInfo(userInfo);
+
+        //路径提交后台保存
+        avatarUrl.value = data.result.path ? data.result.path : data.result.url;
       }
 
       async function handleSubmit() {
         try {
           let params: GetAccountInfoModel = await validate();
+          params.avatar = avatarUrl.value;
           await accountEdit(params);
           createMessage.success('更新成功！');
         } finally {
@@ -84,6 +91,7 @@
       return {
         avatar,
         register,
+        avatarUrl,
         uploadApi: uploadApi as any,
         updateAvatar,
         handleSubmit,
