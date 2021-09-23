@@ -1,4 +1,5 @@
 export interface GetAccountInfoModel {
+  username: string;
   email: string;
   nickname: string;
   description: string;

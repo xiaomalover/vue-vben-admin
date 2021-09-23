@@ -36,6 +36,13 @@ export const settingList = [
 // 基础设置 form
 export const baseSetschemas: FormSchema[] = [
   {
+    field: 'username',
+    component: 'Input',
+    componentProps: { "readonly": true },
+    label: '用户名',
+    colProps: { span: 18 },
+  },
+  {
     field: 'mobile',
     component: 'Input',
     label: '手机号',
