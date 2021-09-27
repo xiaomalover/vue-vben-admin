@@ -5,6 +5,8 @@
       multiple
       @change="handleChange"
       :action="uploadUrl"
+      :data="{ folder }"
+      :headers="{ Authorization: token }"
       :showUploadList="false"
       accept=".jpg,.jpeg,.gif,.png,.webp"
     >
@@ -21,6 +23,7 @@
   import { useDesign } from '/@/hooks/web/useDesign';
   import { useGlobSetting } from '/@/hooks/setting';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { getToken } from "/@/utils/auth";
 
   export default defineComponent({
     name: 'TinymceImageUpload',
@@ -38,6 +41,11 @@
     setup(props, { emit }) {
       let uploading = false;
 
+      const token = getToken();
+
+      let d = new Date();
+      const folder = 'tinymce-upload' + "/" + d.getFullYear() + d.getMonth() + d.getDate();
+
       const { uploadUrl } = useGlobSetting();
       const { t } = useI18n();
       const { prefixCls } = useDesign('tinymce-img-upload');
@@ -52,7 +60,7 @@
       function handleChange(info: Recordable) {
         const file = info.file;
         const status = file?.status;
-        const url = file?.response?.url;
+        const url = file?.response?.result.url; //这里是上传返回的数据
         const name = file?.name;
 
         if (status === 'uploading') {
@@ -75,6 +83,8 @@
         uploadUrl,
         t,
         getButtonProps,
+        token,
+        folder,
       };
     },
   });

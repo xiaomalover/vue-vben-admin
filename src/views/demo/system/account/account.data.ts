@@ -4,6 +4,12 @@ import { FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
   {
+    title: '头像',
+    dataIndex: 'avatar',
+    width: 100,
+    slots: { customRender: 'avatar' },
+  },
+  {
     title: '用户名',
     dataIndex: 'account',
     width: 120,
@@ -26,16 +32,17 @@ export const columns: BasicColumn[] = [
   {
     title: '角色',
     dataIndex: 'roleName',
-    width: 200,
+    width: 120,
   },
   {
     title: '部门',
     dataIndex: 'deptName',
-    width: 200,
+    width: 120,
   },
   {
     title: '备注',
     dataIndex: 'remark',
+    width: 120,
   },
 ];
 

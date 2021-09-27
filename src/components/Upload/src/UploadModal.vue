@@ -196,7 +196,7 @@
             },
           );
           item.status = UploadResultStatus.SUCCESS;
-          item.responseData = data;
+          item.responseData = data.result;//这里是上传返回的数据
           return {
             success: true,
             error: null,

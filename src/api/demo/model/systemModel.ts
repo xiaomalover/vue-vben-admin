@@ -15,6 +15,7 @@ export type RolePageParams = BasicPageParams & RoleParams;
 export type MenuParams = {
   menuName?: string;
   status?: string;
+  show?: string;
 };
 
 export interface AccountListItem {

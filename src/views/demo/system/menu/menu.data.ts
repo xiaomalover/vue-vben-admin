@@ -46,6 +46,18 @@ export const columns: BasicColumn[] = [
     },
   },
   {
+    title: '菜单状态',
+    dataIndex: 'show',
+    width: 80,
+    customRender: ({ record }) => {
+      const show = record.show;
+      const enable = ~~show === 1;
+      const color = enable ? 'green' : 'red';
+      const text = enable ? '展示' : '不展示';
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  {
     title: '创建时间',
     dataIndex: 'createTime',
     width: 180,
@@ -55,6 +67,7 @@ export const columns: BasicColumn[] = [
 const isDir = (type: number) => type === 0;
 const isMenu = (type: number) => type === 1;
 const isButton = (type: number) => type === 2;
+const isHidden = (show: number) => show === 0;
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -124,7 +137,7 @@ export const formSchema: FormSchema[] = [
     label: '图标',
     component: 'IconPicker',
     required: true,
-    ifShow: ({ values }) => !isButton(values.type),
+    ifShow: ({ values }) => !isButton(values.type) && !isHidden(values.show),
   },
 
   {
@@ -133,6 +146,12 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
     required: true,
     //ifShow: ({ values }) => !isButton(values.type),
+  },
+  {
+    field: 'currentActiveMenu',
+    label: '激活菜单',
+    component: 'Input',
+    ifShow: ({ values }) => isHidden(values.show),
   },
   {
     field: 'component',

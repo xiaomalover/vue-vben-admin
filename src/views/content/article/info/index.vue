@@ -1,29 +1,30 @@
 <template>
   <PageWrapper dense contentFullHeight contentClass="flex">
-    <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
+    <CategoryTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button v-auth="'admin:btn:add'" type="primary" @click="handleCreate">新增账号</a-button>
+        <a-button v-auth="'article:btn:add'" type="primary" @click="handleCreate">添加文章</a-button>
       </template>
       <template #action="{ record }">
         <TableAction
           :actions="[
-            /*{
+            {
               icon: 'clarity:info-standard-line',
-              tooltip: '查看用户详情',
+              tooltip: '查看文章详情',
               onClick: handleView.bind(null, record),
-            },*/
+              auth: ['article:btn:detail'],
+            },
             {
               icon: 'clarity:note-edit-line',
-              tooltip: '编辑用户资料',
+              tooltip: '编辑',
               onClick: handleEdit.bind(null, record),
-              auth: ['admin:btn:edit'],
+              auth: ['article:btn:edit'],
             },
             {
               icon: 'ant-design:delete-outlined',
               color: 'error',
-              tooltip: '删除此账号',
-              auth: ['admin:btn:delete'],
+              tooltip: '删除',
+              auth: ['article:btn:delete'],
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
@@ -32,38 +33,33 @@
           ]"
         />
       </template>
-      <template #avatar="{ record }">
-        <Avatar :size="60" :src="record.avatar" />
+      <template #img="{ text }">
+        <TableImg :size="60" :simpleShow="true" :imgList="text" />
       </template>
     </BasicTable>
-    <AccountModal @register="registerModal" @success="handleSuccess" />
   </PageWrapper>
 </template>
 <script lang="ts">
   import { defineComponent, reactive } from 'vue';
-  import { Avatar } from 'ant-design-vue';
 
-  import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { AccountDelete, getAccountList } from '/@/api/demo/system';
+  import { BasicTable, useTable, TableAction, TableImg } from '/@/components/Table';
+  import { ArticleDelete, getArticleList } from '/@/api/content/article';
   import { PageWrapper } from '/@/components/Page';
-  import DeptTree from './DeptTree.vue';
+  import CategoryTree from './CategoryTree.vue';
+  import { useRouter } from 'vue-router'
 
-  import { useModal } from '/@/components/Modal';
-  import AccountModal from './AccountModal.vue';
-
-  import { columns, searchFormSchema } from './account.data';
+  import { columns, searchFormSchema } from './article.data';
   import { useGo } from '/@/hooks/web/usePage';
 
   export default defineComponent({
     name: 'AccountManagement',
-    components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction, Avatar },
+    components: { BasicTable, PageWrapper, CategoryTree, TableAction, TableImg },
     setup() {
       const go = useGo();
-      const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
       const [registerTable, { reload, updateTableDataRecord }] = useTable({
         title: '账号列表',
-        api: getAccountList,
+        api: getArticleList,
         rowKey: 'id',
         columns,
         formConfig: {
@@ -86,22 +82,18 @@
         },
       });
 
+      const router = useRouter();
+
       function handleCreate() {
-        openModal(true, {
-          isUpdate: false,
-        });
+        go('/content/article/article_add');
       }
 
       function handleEdit(record: Recordable) {
-        //console.log(record);
-        openModal(true, {
-          record,
-          isUpdate: true,
-        });
+        router.push({path: '/content/article/article_edit', query: { id: record.id}});
       }
 
       async function handleDelete(record: Recordable) {
-        let result = await AccountDelete(record.id);
+        let result = await ArticleDelete(record.id);
         if (result) {
           await reload();
         }
@@ -118,18 +110,17 @@
         }
       }
 
-      function handleSelect(deptId = '') {
-        searchInfo.deptId = deptId;
+      function handleSelect(categoryId = '') {
+        searchInfo.categoryId = categoryId;
         reload();
       }
 
       function handleView(record: Recordable) {
-        go('/system/account/account_detail/' + record.id);
+        go('/content/article/article_detail/' + record.id);
       }
 
       return {
         registerTable,
-        registerModal,
         handleCreate,
         handleEdit,
         handleDelete,

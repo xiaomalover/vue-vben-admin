@@ -8,7 +8,7 @@
         <div class="change-avatar">
           <div class="mb-2">头像</div>
           <CropperAvatar
-            :uploadApi="uploadApi"
+            :uploadApi="avatarUploadApi"
             :value="avatar"
             btnText="更换头像"
             :btnProps="{ preIcon: 'ant-design:cloud-upload-outlined' }"
@@ -68,6 +68,11 @@
         return avatar || headerImg;
       });
 
+      async function avatarUploadApi(params) {
+        params.folder = "admin-avatar";
+        return uploadApi(params, function () {});
+      }
+
       async function updateAvatar({ source, data }) {
         //先存入缓存
         const userInfo = userStore.getUserInfo;
@@ -75,7 +80,7 @@
         userStore.setUserInfo(userInfo);
 
         //路径提交后台保存
-        avatarUrl.value = data.result.path ? data.result.path : data.result.url;
+        avatarUrl.value = data.result.url; //这里是上传返回的数据
       }
 
       async function handleSubmit() {
@@ -94,6 +99,7 @@
         avatarUrl,
         uploadApi: uploadApi as any,
         updateAvatar,
+        avatarUploadApi,
         handleSubmit,
       };
     },

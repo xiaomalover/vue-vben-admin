@@ -44,7 +44,7 @@
   import 'tinymce/plugins/print';
   import 'tinymce/plugins/save';
   import 'tinymce/plugins/searchreplace';
-  import 'tinymce/plugins/spellchecker';
+  //import 'tinymce/plugins/spellchecker';
   import 'tinymce/plugins/tabfocus';
   // import 'tinymce/plugins/table';
   import 'tinymce/plugins/template';
