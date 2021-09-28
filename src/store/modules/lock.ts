@@ -5,7 +5,7 @@ import { defineStore } from 'pinia';
 import { LOCK_INFO_KEY } from '/@/enums/cacheEnum';
 import { Persistent } from '/@/utils/cache/persistent';
 import { useUserStore } from './user';
-import { unlockApi } from '/@/api/sys/user';
+import { unlockApi } from '/@/api/sys/common/user';
 
 interface LockState {
   lockInfo: Nullable<LockInfo>;

@@ -2,7 +2,7 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { Tinymce } from '/@/components/Tinymce';
 import { h } from 'vue';
-import { uploadApi } from "/@/api/sys/upload";
+import { uploadApi } from "/@/api/sys/common/upload";
 import { Tag } from "ant-design-vue";
 
 export const columns: BasicColumn[] = [
