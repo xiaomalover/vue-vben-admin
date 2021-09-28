@@ -13,34 +13,34 @@ import {
   AccountRequestModel,
   RoleRequestModel,
   MenuRequestModel,
+  LogPageParams,
+  LogPageListGetResultModel,
 } from './model/systemModel';
 import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
-  //AccountList = '/system/getAccountList',
   AccountList = '/admin/getAccountList',
   AccountAdd = '/admin/add',
   AccountEdit = '/admin/edit',
   AccountDelete = '/admin/delete',
   IsAccountExist = '/system/accountExist',
-  //DeptList = '/system/getDeptList',
   DeptList = '/department/getDepartmentTree',
   DeptAdd = '/department/add',
   DeptEdit = '/department/edit',
   DeptDelete = '/department/delete',
-  //setRoleStatus = '/system/setRoleStatus',
   setRoleStatus = '/role/setStatus',
   MenuList = '/permission/getMenuTree',
   MenuAdd = '/permission/add',
   MenuEdit = '/permission/edit',
   MenuDelete = '/permission/delete',
-  //RolePageList = '/system/getRoleListByPage',
   RolePageList = '/role/getRoleList',
-  //GetAllRoleList = '/system/getAllRoleList',
   GetAllRoleList = '/role/getAllRoleList',
   RoleAdd = '/role/add',
   RoleEdit = '/role/edit',
   RoleDelete = '/role/delete',
+  LogList = '/log/page',
+  LogDelete = '/log/delByIds',
+  LogClear = '/log/delAll',
 }
 
 export const getAccountList = (params: AccountParams) =>
@@ -95,3 +95,10 @@ export const setRoleStatus = (id: number, status: number) =>
 
 export const isAccountExist = (account: string) =>
   defHttp.post({ url: Api.IsAccountExist, params: { account } });
+
+export const getLogListByPage = (params?: LogPageParams) =>
+  defHttp.get<LogPageListGetResultModel>({ url: Api.LogList, params });
+
+export const LogDelete = (id: number) => defHttp.delete({ url: Api.LogDelete + '/' + id });
+
+export const LogClear = () => defHttp.delete({ url: Api.LogClear });

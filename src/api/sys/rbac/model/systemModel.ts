@@ -12,6 +12,24 @@ export type RoleParams = {
 
 export type RolePageParams = BasicPageParams & RoleParams;
 
+export type LogParams = {
+  key?: string;
+};
+
+export type LogPageParams = BasicPageParams & LogParams;
+
+export type LogItem = {
+  costTime: number;
+  ip: string;
+  ip_info: string;
+  name: string;
+  requestParam: string;
+  requestType: string;
+  requestUrl: string;
+  username: string;
+  createdAt: string;
+};
+
 export type MenuParams = {
   menuName?: string;
   status?: string;
@@ -114,3 +132,5 @@ export type MenuListGetResultModel = BasicFetchResult<MenuListItem>;
 export type RolePageListGetResultModel = BasicFetchResult<RoleListItem>;
 
 export type RoleListGetResultModel = RoleListItem[];
+
+export type LogPageListGetResultModel = BasicFetchResult<LogItem>;
