@@ -33,7 +33,7 @@
       const go = useGo();
       // 此处可以得到用户ID
       const articleId = ref(route.params?.id);
-      const { setTitle } = useTabs();
+      const { setTitle, closeCurrent } = useTabs();
 
       const articleInfo = ref({})
 
@@ -54,6 +54,7 @@
       }
 
       function editArticle() {
+        closeCurrent();
         router.push({path: '/content/article/article_edit', query: { id: articleId.value}});
       }
 

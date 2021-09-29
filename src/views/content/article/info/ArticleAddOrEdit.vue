@@ -9,6 +9,7 @@
   import { articleFormSchema } from './article.data';
   import { ArticleAdd, ArticleEdit, getCategoryList, getArticleInfo } from '/@/api/content/article';
   import { useRoute, useRouter } from 'vue-router'
+  import { useTabs } from '/@/hooks/web/useTabs';
 
   export default defineComponent({
     name: 'DeptModal',
@@ -26,6 +27,7 @@
       const route = useRoute();
       const router = useRouter();
       const id = route.query?.id;
+      const { closeCurrent } = useTabs();
 
       onMounted(async () => {
 
@@ -53,11 +55,13 @@
             values.id = id;
             let result = await ArticleEdit(values);
             if (result) {
+              await closeCurrent();
               await router.push({path: "/content/article/info"});
             }
           } else {
             let result = await ArticleAdd(values);
             if (result) {
+              await closeCurrent();
               await router.push({path: "/content/article/info"});
             }
           }
