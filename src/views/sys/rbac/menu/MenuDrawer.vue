@@ -40,6 +40,10 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
+          //避免出现选中项显示为0
+          if (data.record.parentMenu == 0) {
+            data.record.parentMenu = null;
+          }
           rowId.value = data.record.id;
           await setFieldsValue({
             ...data.record,
