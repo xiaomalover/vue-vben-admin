@@ -165,6 +165,7 @@
           content_css:
             publicPath + 'resource/tinymce/skins/ui/' + skinName.value + '/content.min.css',
           ...options,
+          content_style: "img {max-width: 100%;}",
           setup: (editor: Editor) => {
             editorRef.value = editor;
             editor.on('init', (e) => initSetup(e));
