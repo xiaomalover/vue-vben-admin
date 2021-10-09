@@ -67,7 +67,7 @@
   import { defineComponent, computed } from 'vue';
 
   import { AppLogo } from '/@/components/Application';
-  import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
+  import { /*AppLocalePicker,*/ AppDarkModeToggle } from '/@/components/Application';
   import LoginForm from './LoginForm.vue';
 
   import { useGlobSetting } from '/@/hooks/setting';
@@ -80,7 +80,7 @@
     components: {
       AppLogo,
       LoginForm,
-      AppLocalePicker,
+      //AppLocalePicker,
       AppDarkModeToggle,
     },
     props: {
