@@ -17,6 +17,8 @@ export const sessionTimeoutApi = () => defHttp.post<void>({ url: Api.SESSION_TIM
 
 export const tokenExpiredApi = () => defHttp.post<void>({ url: Api.TOKEN_EXPIRED });
 
-export const changePasswordApi = (params: PasswordRequestModel) => defHttp.post({ url: Api.CHANGE_PASSWORD, params });
+export const changePasswordApi = (params: PasswordRequestModel) =>
+  defHttp.post({ url: Api.CHANGE_PASSWORD, params });
 
-export const accountEdit = (params: GetAccountInfoModel) => defHttp.post({ url: Api.ACCOUNT_EDIT, params });
+export const accountEdit = (params: GetAccountInfoModel) =>
+  defHttp.post({ url: Api.ACCOUNT_EDIT, params });

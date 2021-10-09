@@ -28,7 +28,7 @@ export const baseSetschemas: FormSchema[] = [
   {
     field: 'username',
     component: 'Input',
-    componentProps: { "readonly": true },
+    componentProps: { readonly: true },
     label: '用户名',
     colProps: { span: 18 },
   },

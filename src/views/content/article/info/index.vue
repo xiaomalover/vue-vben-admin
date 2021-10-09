@@ -3,7 +3,9 @@
     <CategoryTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
     <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
       <template #toolbar>
-        <a-button v-auth="'article:btn:add'" type="primary" @click="handleCreate">添加文章</a-button>
+        <a-button v-auth="'article:btn:add'" type="primary" @click="handleCreate"
+          >添加文章</a-button
+        >
       </template>
       <template #action="{ record }">
         <TableAction
@@ -46,7 +48,7 @@
   import { ArticleDelete, getArticleList } from '/@/api/content/article';
   import { PageWrapper } from '/@/components/Page';
   import CategoryTree from './CategoryTree.vue';
-  import { useRouter } from 'vue-router'
+  import { useRouter } from 'vue-router';
 
   import { columns, searchFormSchema } from './article.data';
   import { useGo } from '/@/hooks/web/usePage';
@@ -89,7 +91,7 @@
       }
 
       function handleEdit(record: Recordable) {
-        router.push({path: '/content/article/article_edit', query: { id: record.id}});
+        router.push({ path: '/content/article/article_edit', query: { id: record.id } });
       }
 
       async function handleDelete(record: Recordable) {
@@ -103,7 +105,7 @@
         if (isUpdate) {
           // 演示不刷新表格直接更新内部数据。
           // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
-          /*const result = */updateTableDataRecord(values.id, values);
+          /*const result = */ updateTableDataRecord(values.id, values);
           //console.log(result);
         } else {
           reload();

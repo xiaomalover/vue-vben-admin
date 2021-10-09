@@ -5,7 +5,7 @@ import {
   ArticleListGetResultModel,
   ArticleInfoModel,
 } from './model/articleModel';
-import {defHttp} from '/@/utils/http/axios';
+import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
   CategoryList = '/article/category/getCategoryTree',
@@ -28,13 +28,13 @@ export const CategoryAdd = (params: CategoryRequestModel) =>
 export const CategoryEdit = (params: CategoryRequestModel) =>
   defHttp.post({ url: Api.CategoryEdit, params });
 
-export const CategoryDelete = (id: number) => defHttp.delete({ url: Api.CategoryDelete + '/' + id });
+export const CategoryDelete = (id: number) =>
+  defHttp.delete({ url: Api.CategoryDelete + '/' + id });
 
 export const getArticleList = (params?: ArticleInfoModel) =>
   defHttp.get<ArticleListGetResultModel>({ url: Api.ArticleList, params });
 
-export const getArticleInfo = (id: number) =>
-  defHttp.get({url: Api.ArticleInfo + "/" + id});
+export const getArticleInfo = (id: number) => defHttp.get({ url: Api.ArticleInfo + '/' + id });
 
 export const ArticleAdd = (params: CategoryRequestModel) =>
   defHttp.post({ url: Api.ArticleAdd, params });

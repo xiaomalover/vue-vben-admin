@@ -11,7 +11,7 @@
 
     <div class="pt-4 m-4 desc-wrap">
       <p style="text-align: center">{{ articleInfo.title }}</p>
-      <p style="padding: 100px 200px;"><span v-html="articleInfo.content"></span></p>
+      <p style="padding: 100px 200px"><span v-html="articleInfo.content"></span></p>
     </div>
   </PageWrapper>
 </template>
@@ -35,10 +35,10 @@
       const articleId = ref(route.params?.id);
       const { setTitle, closeCurrent } = useTabs();
 
-      const articleInfo = ref({})
+      const articleInfo = ref({});
 
       async function fetch() {
-        articleInfo.value = (await getArticleInfo(articleId.value));
+        articleInfo.value = await getArticleInfo(articleId.value);
         // 设置Tab的标题（不会影响页面标题）
         setTitle('文章详情：' + articleInfo.value.title);
       }
@@ -55,7 +55,7 @@
 
       function editArticle() {
         closeCurrent();
-        router.push({path: '/content/article/article_edit', query: { id: articleId.value}});
+        router.push({ path: '/content/article/article_edit', query: { id: articleId.value } });
       }
 
       return { articleId, goBack, articleInfo, editArticle };

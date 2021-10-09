@@ -57,22 +57,18 @@ export const AccountDelete = (id: number) => defHttp.delete({ url: Api.AccountDe
 export const getDeptList = (params?: DeptListItem) =>
   defHttp.get<DeptListGetResultModel>({ url: Api.DeptList, params });
 
-export const DeptAdd = (params: DeptRequestModel) =>
-  defHttp.post({ url: Api.DeptAdd, params });
+export const DeptAdd = (params: DeptRequestModel) => defHttp.post({ url: Api.DeptAdd, params });
 
-export const DeptEdit = (params: DeptRequestModel) =>
-  defHttp.post({ url: Api.DeptEdit, params });
+export const DeptEdit = (params: DeptRequestModel) => defHttp.post({ url: Api.DeptEdit, params });
 
 export const DeptDelete = (id: number) => defHttp.delete({ url: Api.DeptDelete + '/' + id });
 
 export const getMenuList = (params?: MenuParams) =>
   defHttp.get<MenuListGetResultModel>({ url: Api.MenuList, params });
 
-export const MenuAdd = (params: MenuRequestModel) =>
-  defHttp.post({ url: Api.MenuAdd, params });
+export const MenuAdd = (params: MenuRequestModel) => defHttp.post({ url: Api.MenuAdd, params });
 
-export const MenuEdit = (params: MenuRequestModel) =>
-  defHttp.post({ url: Api.MenuEdit, params });
+export const MenuEdit = (params: MenuRequestModel) => defHttp.post({ url: Api.MenuEdit, params });
 
 export const MenuDelete = (id: number) => defHttp.delete({ url: Api.MenuDelete + '/' + id });
 
@@ -82,11 +78,9 @@ export const getRoleListByPage = (params?: RolePageParams) =>
 export const getAllRoleList = (params?: RoleParams) =>
   defHttp.get<RoleListGetResultModel>({ url: Api.GetAllRoleList, params });
 
-export const RoleAdd = (params: RoleRequestModel) =>
-  defHttp.post({ url: Api.RoleAdd, params });
+export const RoleAdd = (params: RoleRequestModel) => defHttp.post({ url: Api.RoleAdd, params });
 
-export const RoleEdit = (params: RoleRequestModel) =>
-  defHttp.post({ url: Api.RoleEdit, params });
+export const RoleEdit = (params: RoleRequestModel) => defHttp.post({ url: Api.RoleEdit, params });
 
 export const RoleDelete = (id: number) => defHttp.delete({ url: Api.RoleDelete + '/' + id });
 

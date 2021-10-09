@@ -2,7 +2,9 @@
   <div>
     <BasicTable @register="registerTable">
       <template #toolbar>
-        <a-button v-auth="'article-category:btn:add'" type="primary" @click="handleCreate"> 添加分类 </a-button>
+        <a-button v-auth="'article-category:btn:add'" type="primary" @click="handleCreate">
+          添加分类
+        </a-button>
       </template>
       <template #action="{ record }">
         <TableAction

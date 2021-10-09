@@ -2,8 +2,8 @@ import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { Tinymce } from '/@/components/Tinymce';
 import { h } from 'vue';
-import { uploadApi } from "/@/api/sys/common/upload";
-import { Tag } from "ant-design-vue";
+import { uploadApi } from '/@/api/sys/common/upload';
+import { Tag } from 'ant-design-vue';
 
 export const columns: BasicColumn[] = [
   {
@@ -107,8 +107,8 @@ export const articleFormSchema: FormSchema[] = [
       multiple: false,
       maxNumber: 1,
       maxSize: 10,
-      uploadParams:  {folder: "article-thumb"},
-      accept: ["jpg", "jpeg", "gif", "png", "webp"],
+      uploadParams: { folder: 'article-thumb' },
+      accept: ['jpg', 'jpeg', 'gif', 'png', 'webp'],
     },
   },
   {

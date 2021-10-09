@@ -18,6 +18,6 @@ export function getCaptcha(mode: ErrorMessageMode = 'modal') {
     },
     {
       errorMessageMode: mode,
-    }
+    },
   );
 }

@@ -49,9 +49,7 @@ export function useFormRules() {
     const passwordFormRule = unref(getPasswordFormRule);
     const captchaFormRule = unref(getCaptchaFormRule);
 
-
     switch (unref(currentState)) {
-
       // login form rules
       default:
         return {

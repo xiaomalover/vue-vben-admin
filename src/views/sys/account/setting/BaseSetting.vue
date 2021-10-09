@@ -18,7 +18,9 @@
         </div>
       </a-col>
     </a-row>
-    <Button v-auth="'setting:btn:basic'" type="primary" @click="handleSubmit"> 更新基本信息 </Button>
+    <Button v-auth="'setting:btn:basic'" type="primary" @click="handleSubmit">
+      更新基本信息
+    </Button>
   </CollapseContainer>
 </template>
 <script lang="ts">
@@ -35,7 +37,7 @@
   import { baseSetschemas } from './data';
   import { useUserStore } from '/@/store/modules/user';
   import { uploadApi } from '/@/api/sys/common/upload';
-  import { GetAccountInfoModel } from "/@/api/sys/rbac/model/accountModel";
+  import { GetAccountInfoModel } from '/@/api/sys/rbac/model/accountModel';
 
   export default defineComponent({
     components: {
@@ -50,7 +52,7 @@
       const { createMessage } = useMessage();
       const userStore = useUserStore();
 
-      const avatarUrl = ref("");
+      const avatarUrl = ref('');
 
       const [register, { setFieldsValue, validate }] = useForm({
         labelWidth: 120,
@@ -69,7 +71,7 @@
       });
 
       async function avatarUploadApi(params) {
-        params.folder = "admin-avatar";
+        params.folder = 'admin-avatar';
         return uploadApi(params, function () {});
       }
 
